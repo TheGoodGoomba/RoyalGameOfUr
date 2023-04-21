@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Board Diagram.png" />
+    <None Remove="boxdrawing" />
+    <None Remove="Screenshot 2023-04-21 103833.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Board.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
