@@ -22,7 +22,7 @@ namespace RoyalGameOfUr
             var square = Board.Squares.Find(x => x.Coordinates == newPosition);
             Console.SetCursorPosition(square.Left, square.Top);
             Console.BackgroundColor = Color;
-            Console.Write("_");
+            Console.Write(" ");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 5);
             Position = newPosition;

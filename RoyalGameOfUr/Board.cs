@@ -49,7 +49,7 @@ namespace RoyalGameOfUr
                 Console.Write(" * ");
             }
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(7, 1);
+            Console.SetCursorPosition(1, 7);
             Console.WriteLine();
         }
     }
