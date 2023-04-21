@@ -12,47 +12,113 @@ namespace RoyalGameOfUr
         static string BoardLayout = File.ReadAllText(BoardTxtPath);
         public static List<Square> Squares = new List<Square>
         {
-            new Square(Coordinate.A1, 14, 1),
-            new Square(Coordinate.A2, 10, 1),
-            new Square(Coordinate.A3, 6, 1),
-            new Square(Coordinate.A4, 2, 1),
-            new Square(Coordinate.B1, 14, 5),
-            new Square(Coordinate.B2, 10, 5),
-            new Square(Coordinate.B3, 6, 5),
-            new Square(Coordinate.B4, 2, 5),
-            new Square(Coordinate.C1, 2, 3),
-            new Square(Coordinate.C2, 6, 3),
-            new Square(Coordinate.C3, 10, 3),
-            new Square(Coordinate.C4, 14, 3),
-            new Square(Coordinate.C5, 18, 3),
-            new Square(Coordinate.C6, 22, 3),
-            new Square(Coordinate.C7, 26, 3),
-            new Square(Coordinate.C8, 30, 3),
-            new Square(Coordinate.A5, 30, 1),
-            new Square(Coordinate.A6, 26, 1),
-            new Square(Coordinate.B5, 30, 5),
-            new Square(Coordinate.B6, 26, 5)
+            new Square(0, 0),
+            new Square(14, 1),
+            new Square(10, 1),
+            new Square(6, 1),
+            new Square(2, 1),
+            new Square(14, 5),
+            new Square(10, 5),
+            new Square(6, 5),
+            new Square(2, 5),
+            new Square(2, 3),
+            new Square(6, 3),
+            new Square(10, 3),
+            new Square(14, 3),
+            new Square(18, 3),
+            new Square(22, 3),
+            new Square(26, 3),
+            new Square(30, 3),
+            new Square(30, 1),
+            new Square(26, 1),
+            new Square(30, 5),
+            new Square(26, 5),
+            new Square(0, 0)
         };
-        public static List<Coordinate> Player1SquareSequence = new List<Coordinate>
+        public static Dictionary<Coordinate, Square> CoordToSquare = new Dictionary<Coordinate, Square>
         {
-            Coordinate.A1, Coordinate.A2, Coordinate.A3, Coordinate.A4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.A5, Coordinate.A6
+            { Coordinate.Off, Squares[0] },
+            { Coordinate.A1, Squares[1] },
+            { Coordinate.A2, Squares[2] },
+            { Coordinate.A3, Squares[3] },
+            { Coordinate.A4, Squares[4] },
+            { Coordinate.B1, Squares[5] },
+            { Coordinate.B2, Squares[6] },
+            { Coordinate.B3, Squares[7] },
+            { Coordinate.B4, Squares[9] },
+            { Coordinate.C1, Squares[10] },
+            { Coordinate.C2, Squares[11] },
+            { Coordinate.C3, Squares[12] },
+            { Coordinate.C4, Squares[13] },
+            { Coordinate.C5, Squares[14] },
+            { Coordinate.C6, Squares[15] },
+            { Coordinate.C7, Squares[16] },
+            { Coordinate.C8, Squares[17] },
+            { Coordinate.A5, Squares[18] },
+            { Coordinate.A6, Squares[19] },
+            { Coordinate.B5, Squares[20] },
+            { Coordinate.B6, Squares[21] },
+            { Coordinate.Home, Squares[22] }
         };
-        public static List<Coordinate> Player2SquareSequence = new List<Coordinate>
+        public static List<Square> Player1SquareSequence = new List<Square>
         {
-            Coordinate.B1, Coordinate.B2, Coordinate.B3, Coordinate.B4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.B5, Coordinate.B6
+            //Coordinate.A1, Coordinate.A2, Coordinate.A3, Coordinate.A4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.A5, Coordinate.A6
+            CoordToSquare[Coordinate.Off],
+            CoordToSquare[Coordinate.A1],
+            CoordToSquare[Coordinate.A2],
+            CoordToSquare[Coordinate.A3],
+            CoordToSquare[Coordinate.A4],
+            CoordToSquare[Coordinate.C1],
+            CoordToSquare[Coordinate.C2],
+            CoordToSquare[Coordinate.C3],
+            CoordToSquare[Coordinate.C4],
+            CoordToSquare[Coordinate.C5],
+            CoordToSquare[Coordinate.C6],
+            CoordToSquare[Coordinate.C7],
+            CoordToSquare[Coordinate.C8],
+            CoordToSquare[Coordinate.A5],
+            CoordToSquare[Coordinate.A6],
+            CoordToSquare[Coordinate.Home]
+        };
+        public static List<Square> Player2SquareSequence = new List<Square>
+        {
+            //Coordinate.B1, Coordinate.B2, Coordinate.B3, Coordinate.B4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.B5, Coordinate.B6
+            CoordToSquare[Coordinate.Off],
+            CoordToSquare[Coordinate.B1],
+            CoordToSquare[Coordinate.B2],
+            CoordToSquare[Coordinate.B3],
+            CoordToSquare[Coordinate.B4],
+            CoordToSquare[Coordinate.C1],
+            CoordToSquare[Coordinate.C2],
+            CoordToSquare[Coordinate.C3],
+            CoordToSquare[Coordinate.C4],
+            CoordToSquare[Coordinate.C5],
+            CoordToSquare[Coordinate.C6],
+            CoordToSquare[Coordinate.C7],
+            CoordToSquare[Coordinate.C8],
+            CoordToSquare[Coordinate.B5],
+            CoordToSquare[Coordinate.B6],
+            CoordToSquare[Coordinate.Home]
         };
 
         public static void DrawBoard()
         {
             Console.WriteLine(BoardLayout);
-            var rosettes = new List<Coordinate>
+            //var rosettes = new List<Coordinate>
+            //{
+            //    Coordinate.A4, Coordinate.B4, Coordinate.C4, Coordinate.A6, Coordinate.B6
+            //};
+            var rosettes = new List<Square>
             {
-                Coordinate.A4, Coordinate.B4, Coordinate.C4, Coordinate.A6, Coordinate.B6
+                CoordToSquare[Coordinate.A4],
+                CoordToSquare[Coordinate.B4],
+                CoordToSquare[Coordinate.C4],
+                CoordToSquare[Coordinate.A6],
+                CoordToSquare[Coordinate.B6]
             };
             Console.BackgroundColor = ConsoleColor.Magenta;
-            foreach (var r in rosettes)
+            foreach (var square in rosettes)
             {
-                var square = Squares.Find(x => x.Coordinates == r);
                 Console.SetCursorPosition(square.Left - 1, square.Top);
                 Console.Write(" * ");
             }
@@ -61,68 +127,68 @@ namespace RoyalGameOfUr
             Console.WriteLine();
         }
 
-        public static bool Player1EntranceSpotFree(int diceRoll)
-        {
-            switch (diceRoll)
-            {
-                case 1:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A1).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 2:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A2).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 3:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A3).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 4:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A4).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-            }
-            return false;
-        }
+        //public static bool Player1EntranceSpotFree(int diceRoll)
+        //{
+        //    switch (diceRoll)
+        //    {
+        //        case 1:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A1).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 2:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A2).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 3:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A3).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 4:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A4).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //    }
+        //    return false;
+        //}
 
-        public static bool Player2EntranceSpotFree(int diceRoll)
-        {
-            switch (diceRoll)
-            {
-                case 1:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B1).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 2:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B2).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 3:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B3).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-                case 4:
-                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B4).HasPiece)
-                    {
-                        return true;
-                    }
-                    break;
-            }
-            return false;
-        }
+        //public static bool Player2EntranceSpotFree(int diceRoll)
+        //{
+        //    switch (diceRoll)
+        //    {
+        //        case 1:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B1).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 2:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B2).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 3:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B3).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //        case 4:
+        //            if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B4).HasPiece)
+        //            {
+        //                return true;
+        //            }
+        //            break;
+        //    }
+        //    return false;
+        //}
     }
 }

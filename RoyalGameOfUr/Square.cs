@@ -8,16 +8,17 @@ namespace RoyalGameOfUr
 {
     public class Square
     {
-        public Square(Coordinate coord, int left, int top)
+        public Square(/*Coordinate coord, */int left, int top)
         {
-            Coordinates = coord;
+            //Coordinates = coord;
             Left = left;
             Top = top;
         }
 
-        public Coordinate Coordinates { get; set; }
+        //public Coordinate Coordinates { get; set; }
         public int Left { get; set; }
         public int Top { get; set; }
-        public bool HasPiece { get; set; }
+        //public bool HasPiece { get; set; }
+        public Piece Piece { get; set; }
     }
 }

@@ -8,43 +8,52 @@ namespace RoyalGameOfUr
 {
     public class Piece
     {
-        public Piece(Coordinate pos, Player player)
+        public Piece(Square square, Player player)
         {
-            Position = pos;
+            Square = square;
             Player = player;
         }
 
-        public Coordinate Position { get; set; }
+        //public Coordinate Position { get; set; }
         public Player Player { get; set; }
+        public Square Square { get; set; }
 
-        public void Move(Coordinate newPosition)
+        public void Move(Square newSquare)
         {
-            Square oldSquare;
-            if (Position == Coordinate.Off)
-            {
-                oldSquare = null;
-            }
-            else
-            {
-                oldSquare = Board.Squares.Find(x => x.Coordinates == Position);
-            }
-            var newSquare = Board.Squares.Find(x => x.Coordinates == newPosition);
+            Square.Piece = null;
+            Square = null;
             Console.SetCursorPosition(newSquare.Left, newSquare.Top);
             Console.BackgroundColor = Player.Color;
             Console.Write(" ");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 5);
-            Position = newPosition;
-            if (oldSquare != null)
-            {
-                oldSquare.HasPiece = false;
-            }
-            newSquare.HasPiece = true;
+            Square = newSquare;
+            //Square oldSquare;
+            //if (Position == Coordinate.Off)
+            //{
+            //    oldSquare = null;
+            //}
+            //else
+            //{
+            //    oldSquare = Board.Squares.Find(x => x.Coordinates == Position);
+            //}
+            //var newSquare = Board.Squares.Find(x => x.Coordinates == newPosition);
+            //Console.SetCursorPosition(newSquare.Left, newSquare.Top);
+            //Console.BackgroundColor = Player.Color;
+            //Console.Write(" ");
+            //Console.BackgroundColor = ConsoleColor.Black;
+            //Console.SetCursorPosition(0, 5);
+            //Position = newPosition;
+            //if (oldSquare != null)
+            //{
+            //    oldSquare.HasPiece = false;
+            //}
+            //newSquare.HasPiece = true;
         }
 
         public bool CanMove(int diceRoll, Player player)
         {
-            List<Coordinate> squareSequence = new List<Coordinate>();
+            List<Square> squareSequence = new List<Square>();
             if (player == Game.Player1)
             {
                 squareSequence = Board.Player1SquareSequence;
@@ -54,10 +63,11 @@ namespace RoyalGameOfUr
                 squareSequence = Board.Player2SquareSequence;
             }
 
-            var sequenceId = squareSequence.IndexOf(Position);
-            var potentialSquareCoordinates = squareSequence[sequenceId + diceRoll];
-            var potentialSquare = Board.Squares.Find(x => x.Coordinates == potentialSquareCoordinates);
-            if (!potentialSquare.HasPiece)
+            var sequenceId = squareSequence.IndexOf(Square);
+            //var potentialSquareCoordinates = squareSequence[sequenceId + diceRoll];
+            //var potentialSquare = Board.Squares.Find(x => x.Coordinates == potentialSquareCoordinates);
+            var potentialSquare = squareSequence[sequenceId + diceRoll];
+            if (potentialSquare.Piece != null)
             {
                 return true;
             }
