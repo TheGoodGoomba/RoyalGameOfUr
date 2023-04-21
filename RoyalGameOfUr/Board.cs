@@ -33,6 +33,14 @@ namespace RoyalGameOfUr
             new Square(Coordinate.B5, 30, 5),
             new Square(Coordinate.B6, 26, 5)
         };
+        public static List<Coordinate> Player1SquareSequence = new List<Coordinate>
+        {
+            Coordinate.A1, Coordinate.A2, Coordinate.A3, Coordinate.A4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.A5, Coordinate.A6
+        };
+        public static List<Coordinate> Player2SquareSequence = new List<Coordinate>
+        {
+            Coordinate.B1, Coordinate.B2, Coordinate.B3, Coordinate.B4, Coordinate.C1, Coordinate.C2, Coordinate.C3, Coordinate.C4, Coordinate.C5, Coordinate.C6, Coordinate.C7, Coordinate.C8, Coordinate.B5, Coordinate.B6
+        };
 
         public static void DrawBoard()
         {
@@ -49,8 +57,72 @@ namespace RoyalGameOfUr
                 Console.Write(" * ");
             }
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(1, 7);
+            Console.SetCursorPosition(1, 6);
             Console.WriteLine();
+        }
+
+        public static bool Player1EntranceSpotFree(int diceRoll)
+        {
+            switch (diceRoll)
+            {
+                case 1:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A1).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 2:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A2).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 3:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A3).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 4:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.A4).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        public static bool Player2EntranceSpotFree(int diceRoll)
+        {
+            switch (diceRoll)
+            {
+                case 1:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B1).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 2:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B2).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 3:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B3).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+                case 4:
+                    if (!Board.Squares.Find(x => x.Coordinates == Coordinate.B4).HasPiece)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            return false;
         }
     }
 }

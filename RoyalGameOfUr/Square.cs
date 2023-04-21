@@ -18,5 +18,6 @@ namespace RoyalGameOfUr
         public Coordinate Coordinates { get; set; }
         public int Left { get; set; }
         public int Top { get; set; }
+        public bool HasPiece { get; set; }
     }
 }

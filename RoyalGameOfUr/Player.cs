@@ -13,13 +13,13 @@ namespace RoyalGameOfUr
             Color = color;
             Pieces = new List<Piece>
             {
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color),
-                new Piece(Coordinate.Off, Color)
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this),
+                new Piece(Coordinate.Off, this)
             };
         }
 
