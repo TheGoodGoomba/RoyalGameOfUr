@@ -71,6 +71,24 @@ namespace RoyalGameOfUr
                 move.Identifier = i;
                 i++;
             }
+
+            Console.WriteLine("Type number of piece to move OR 'P' to place a piece on the board.");
+            Console.Write(">>> ");
+            var response = Console.ReadLine();
+            int responseInt;
+            var parsed = int.TryParse(response, out responseInt);
+            if (response.ToLower() == "p")
+            {
+
+            }
+            else if (parsed)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         static bool IsGameWon()
