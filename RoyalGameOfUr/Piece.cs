@@ -14,7 +14,6 @@ namespace RoyalGameOfUr
             Player = player;
         }
 
-        //public Coordinate Position { get; set; }
         public Player Player { get; set; }
         public Square Square { get; set; }
 
@@ -28,27 +27,6 @@ namespace RoyalGameOfUr
             Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 5);
             Square = newSquare;
-            //Square oldSquare;
-            //if (Position == Coordinate.Off)
-            //{
-            //    oldSquare = null;
-            //}
-            //else
-            //{
-            //    oldSquare = Board.Squares.Find(x => x.Coordinates == Position);
-            //}
-            //var newSquare = Board.Squares.Find(x => x.Coordinates == newPosition);
-            //Console.SetCursorPosition(newSquare.Left, newSquare.Top);
-            //Console.BackgroundColor = Player.Color;
-            //Console.Write(" ");
-            //Console.BackgroundColor = ConsoleColor.Black;
-            //Console.SetCursorPosition(0, 5);
-            //Position = newPosition;
-            //if (oldSquare != null)
-            //{
-            //    oldSquare.HasPiece = false;
-            //}
-            //newSquare.HasPiece = true;
         }
 
         public bool CanMove(int diceRoll, Player player)
@@ -64,8 +42,6 @@ namespace RoyalGameOfUr
             }
 
             var sequenceId = squareSequence.IndexOf(Square);
-            //var potentialSquareCoordinates = squareSequence[sequenceId + diceRoll];
-            //var potentialSquare = Board.Squares.Find(x => x.Coordinates == potentialSquareCoordinates);
             var potentialSquare = squareSequence[sequenceId + diceRoll];
             if (potentialSquare.Piece != null)
             {
@@ -75,7 +51,6 @@ namespace RoyalGameOfUr
             {
                 //find the piece (p1 or p2) that is on that square.
                 //if it is the other player's then we can still move UNLESS it is on C4.
-
 
                 return false;
             }

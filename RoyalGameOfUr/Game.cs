@@ -31,60 +31,8 @@ namespace RoyalGameOfUr
             Console.ReadLine();
             Console.WriteLine(diceRoll);
 
-            // 1. Find out the types of moves you can make (Place or Move)
-            // 2. Options for each.
-
-            //var avaliableMoveTypes = GetAvaliableMoveTypes(player, diceRoll);
-
             Console.ReadLine();
         }
-
-        //public static MoveType? GetAvaliableMoveTypes(Player player, int diceRoll)
-        //{
-        //    var canPlace = false;
-        //    var canMove = false;
-
-        //    // Check for placing
-        //    if (player == Player1)
-        //    {
-        //        canPlace = Board.Player1EntranceSpotFree(diceRoll);
-        //    }
-        //    else if (player == Player2)
-        //    {
-        //        canPlace = Board.Player2EntranceSpotFree(diceRoll);
-        //    }
-
-        //    // Check for moving
-        //    var piecesOnBoard = new List<Piece>();
-        //    foreach (var piece in player.Pieces)
-        //    {
-        //        if (piece.Position != Coordinate.Off && piece.Position != Coordinate.Home)
-        //        {
-        //            piecesOnBoard.Add(piece);
-        //        }
-        //    }
-        //    foreach (var piece in piecesOnBoard)
-        //    {
-        //        canMove = piece.CanMove(diceRoll, player);
-        //    }
-
-        //    if (canPlace && canMove)
-        //    {
-        //        return MoveType.Either;
-        //    }
-        //    else if (canPlace && !canMove)
-        //    {
-        //        return MoveType.Place;
-        //    }
-        //    else if (canMove && !canPlace)
-        //    {
-        //        return MoveType.Move;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
 
         public static bool IsGameWon()
         {
