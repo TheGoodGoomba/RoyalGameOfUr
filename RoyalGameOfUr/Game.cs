@@ -36,6 +36,7 @@ namespace RoyalGameOfUr
 
             var avaliableMoveTypes = GetAvaliableMoveTypes(player, diceRoll);
 
+
             Console.ReadLine();
         }
 
