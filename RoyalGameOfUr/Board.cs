@@ -99,6 +99,43 @@ namespace RoyalGameOfUr
             CoordToSquare[Coordinate.Home]
         };
 
+        public static List<Move> FindLegalMoves(Player player, int diceRoll)
+        {
+            var legalMoves = new List<Move>();
+            var squareSequence = player == Game.Player1 ? Player1SquareSequence : Player2SquareSequence;
+            foreach (var piece in player.Pieces)
+            {
+                var currentSquareIndex = squareSequence.IndexOf(piece.Square);
+                var potentialSquare = squareSequence[currentSquareIndex + diceRoll];
+                if (potentialSquare.Piece == null)
+                {
+                    var move = new Move(piece, potentialSquare);
+                    legalMoves.Add(move);
+                }
+            }
+            return legalMoves;
+        }
+
+        public static void DrawMoveablePieces(Player player, List<Move> legalMoves)
+        {
+            var drawableMoves = new List<Move>();
+            foreach (var move in legalMoves)
+            {
+                if (move.Piece.Square != CoordToSquare[Coordinate.Off])
+                {
+                    drawableMoves.Add(move);
+                }
+            }
+            var i = 1;
+            foreach (var move in drawableMoves)
+            {
+                Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
+                Console.BackgroundColor = player.Color;
+                Console.Write(i);
+                i++;
+            }
+        }
+
         public static void DrawBoard()
         {
             Console.WriteLine(BoardLayout);
@@ -119,6 +156,13 @@ namespace RoyalGameOfUr
             Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(1, 6);
             Console.WriteLine();
+            Console.WriteLine("Player 1: 7|0        Player 2: 7|0");
+            /*
+             * P1 Offs:  (10, 7)
+             * P1 Homes: (12, 7)
+             * P2 Offs:  (31, 7)
+             * P2 Homes: (33, 7)
+            */
         }
     }
 }

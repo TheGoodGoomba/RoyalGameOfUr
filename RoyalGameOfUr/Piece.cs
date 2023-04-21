@@ -28,32 +28,5 @@ namespace RoyalGameOfUr
             Console.SetCursorPosition(0, 5);
             Square = newSquare;
         }
-
-        public bool CanMove(int diceRoll, Player player)
-        {
-            List<Square> squareSequence = new List<Square>();
-            if (player == Game.Player1)
-            {
-                squareSequence = Board.Player1SquareSequence;
-            }
-            else if (player == Game.Player2)
-            {
-                squareSequence = Board.Player2SquareSequence;
-            }
-
-            var sequenceId = squareSequence.IndexOf(Square);
-            var potentialSquare = squareSequence[sequenceId + diceRoll];
-            if (potentialSquare.Piece != null)
-            {
-                return true;
-            }
-            else
-            {
-                //find the piece (p1 or p2) that is on that square.
-                //if it is the other player's then we can still move UNLESS it is on C4.
-
-                return false;
-            }
-        }
     }
 }

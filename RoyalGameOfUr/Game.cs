@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,17 +25,55 @@ namespace RoyalGameOfUr
             }
         }
 
-        public static void Turn(Player player)
+        static void Turn(Player player)
         {
-            Console.Write("Player 1's Turn. ENTER to roll:");
+            Console.Write("Player 1's Turn. ENTER to roll");
             var diceRoll = Dice.Roll();
             Console.ReadLine();
             Console.WriteLine(diceRoll);
 
+            //var legalMoves = Board.FindLegalMoves(player, diceRoll);
+            //Board.DrawMoveablePieces(player, legalMoves);
+            SelectMove(player, diceRoll);
+
             Console.ReadLine();
         }
 
-        public static bool IsGameWon()
+        static void SelectMove(Player player, int diceRoll)
+        {
+            var legalMoves = new List<Move>();
+            var squareSequence = player == Player1 ? Board.Player1SquareSequence : Board.Player2SquareSequence;
+            foreach (var piece in player.Pieces)
+            {
+                var currentSquareIndex = squareSequence.IndexOf(piece.Square);
+                var potentialSquare = squareSequence[currentSquareIndex + diceRoll];
+                if (potentialSquare.Piece == null)
+                {
+                    var move = new Move(piece, potentialSquare);
+                    legalMoves.Add(move);
+                }
+            }
+
+            var drawableMoves = new List<Move>();
+            foreach (var move in legalMoves)
+            {
+                if (move.Piece.Square != Board.CoordToSquare[Coordinate.Off])
+                {
+                    drawableMoves.Add(move);
+                }
+            }
+            var i = 1;
+            foreach (var move in drawableMoves)
+            {
+                Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
+                Console.BackgroundColor = player.Color;
+                Console.Write(i);
+                move.Identifier = i;
+                i++;
+            }
+        }
+
+        static bool IsGameWon()
         {
             var player1PiecesLeft = 7;
             foreach (var piece in Player1.Pieces)
