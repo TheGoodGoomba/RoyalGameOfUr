@@ -99,6 +99,32 @@ namespace RoyalGameOfUr
             CoordToSquare[Coordinate.Home]
         };
 
+        public static void Refresh()
+        {
+            Console.Clear();
+            DrawBoard();
+
+            foreach (var piece in Game.Player1.Pieces)
+            {
+                piece.RefreshDraw();
+            }
+            Console.SetCursorPosition(10, 7);
+            Console.Write(Game.Player1.CountOffPieces());
+            Console.SetCursorPosition(12, 7);
+            Console.Write(Game.Player1.CountHomePieces());
+
+            foreach (var piece in Game.Player2.Pieces)
+            {
+                piece.RefreshDraw();
+            }
+            Console.SetCursorPosition(31, 7);
+            Console.Write(Game.Player2.CountOffPieces());
+            Console.SetCursorPosition(33, 7);
+            Console.Write(Game.Player2.CountHomePieces());
+
+            Console.WriteLine();
+        }
+
         public static void DrawBoard()
         {
             Console.WriteLine(BoardLayout);

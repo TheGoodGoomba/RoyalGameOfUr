@@ -114,6 +114,8 @@ namespace RoyalGameOfUr
                     desiredMove.Piece.Move(oldSquare, $"{desiredMove.Identifier}");
                 }
             }
+
+            Board.Refresh();
         }
 
         static bool IsGameWon()

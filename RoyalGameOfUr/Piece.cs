@@ -48,5 +48,15 @@ namespace RoyalGameOfUr
             }
             Console.SetCursorPosition(cursorReturn.Left, cursorReturn.Top);
         }
+
+        public void RefreshDraw()
+        {
+            var cursorReturn = Console.GetCursorPosition();
+            Console.SetCursorPosition(Square.Left, Square.Top);
+            Console.BackgroundColor = Player.Color;
+            Console.Write(" ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(cursorReturn.Left, cursorReturn.Top);
+        }
     }
 }

@@ -25,5 +25,31 @@ namespace RoyalGameOfUr
 
         public ConsoleColor Color { get; set; }
         public List<Piece> Pieces { get; set; }
+
+        public int CountOffPieces()
+        {
+            var count = 0;
+            foreach (var piece in Pieces)
+            {
+                if (piece.Square == Board.CoordToSquare[Coordinate.Off])
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public int CountHomePieces()
+        {
+            var count = 0;
+            foreach (var piece in Pieces)
+            {
+                if (piece.Square == Board.CoordToSquare[Coordinate.Home])
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }
