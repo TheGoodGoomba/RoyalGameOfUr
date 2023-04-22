@@ -9,7 +9,7 @@ namespace RoyalGameOfUr
         static void Main(string[] args)
         {
             Board.DrawBoard();
-            Console.ReadLine();
+            Console.WriteLine();
             Game.Play();
 
             //Console.WriteLine(Dice.Roll());
