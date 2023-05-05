@@ -28,7 +28,7 @@ namespace RoyalGameOfUr
         static void Turn(Player player)
         {
             Console.Write($"Player {(player == Player1 ? "1" : "2")}'s Turn. ENTER to roll");
-            var diceRoll = Dice.Roll();
+            var diceRoll = Board.RollDice();
             Console.ReadLine();
             Console.WriteLine(diceRoll);
 
@@ -115,7 +115,7 @@ namespace RoyalGameOfUr
                 }
             }
 
-            Board.Refresh();
+            //Board.Refresh();
         }
 
         static bool IsGameWon()

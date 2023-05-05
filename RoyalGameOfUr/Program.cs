@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 
 namespace RoyalGameOfUr
 {
@@ -8,8 +9,8 @@ namespace RoyalGameOfUr
 
         static void Main(string[] args)
         {
-            Board.DrawBoard();
-            Console.WriteLine();
+            Console.OutputEncoding = Encoding.UTF8;
+            Board.DrawBoardInfo();
             Game.Play();
 
             //Console.WriteLine(Dice.Roll());
