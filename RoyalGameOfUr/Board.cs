@@ -16,7 +16,7 @@ namespace RoyalGameOfUr
         private static bool _die2Value = false;
         private static bool _die3Value = false;
         private static bool _die4Value = false;
-        private static int _diceCount = 0;
+        public static int DiceValue = 0;
 
         static string Message;
         static string Instructions;
@@ -121,12 +121,15 @@ namespace RoyalGameOfUr
             if (_die2Value) roll++;
             if (_die3Value) roll++;
             if (_die4Value) roll++;
-            _diceCount = roll;
+            DiceValue = roll;
+            DrawBoardInfo();
             return roll;
         }
 
         public static void DrawBoardInfo()
         {
+            Console.Clear();
+
             Console.BackgroundColor = ConsoleColor.Black;
 
             Console.Write(BoardInfoLayout);
@@ -136,14 +139,14 @@ namespace RoyalGameOfUr
             Console.Write(Game.Player1.CountOffPieces());
             Console.SetCursorPosition(12, 7);
             Console.Write(Game.Player1.CountHomePieces());
-            Console.SetCursorPosition(10, 9);
+            Console.SetCursorPosition(10, 8);
             Console.Write(Game.Player2.CountOffPieces());
-            Console.SetCursorPosition(12, 9);
+            Console.SetCursorPosition(12, 8);
             Console.Write(Game.Player2.CountHomePieces());
 
             // Dice visual
-            Console.SetCursorPosition(26, 7);
-            Console.Write($"{(_die1Value ? "●" : "○")}{(_die2Value ? "●" : "○")}{(_die3Value ? "●" : "○")}{(_die4Value ? "●" : "○")} {_diceCount}");
+            Console.SetCursorPosition(30, 7);
+            Console.Write($"{(_die1Value ? "●" : "○")}{(_die2Value ? "●" : "○")}{(_die3Value ? "●" : "○")}{(_die4Value ? "●" : "○")} {DiceValue}");
 
             // Message + instruction text
             Console.SetCursorPosition(0, 10);
@@ -154,33 +157,38 @@ namespace RoyalGameOfUr
             foreach (var piece in Game.Player1.Pieces)
             {
                 var square = piece.Square;
-                Console.SetCursorPosition(square.Left, square.Top);
-                Console.BackgroundColor = piece.Player.Color;
-                if (IsSqaureRosette(square))
+                if (square != CoordToSquare[Coordinate.Off] && square != CoordToSquare[Coordinate.Home])
                 {
-                    Console.Write("*");
-                }
-                else
-                {
-                    Console.Write(" ");
+                    Console.SetCursorPosition(square.Left, square.Top);
+                    Console.BackgroundColor = piece.Player.Color;
+                    if (IsSqaureRosette(square))
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
                 }
             }
             foreach (var piece in Game.Player2.Pieces)
             {
                 var square = piece.Square;
-                Console.SetCursorPosition(square.Left, square.Top);
-                Console.BackgroundColor = piece.Player.Color;
-                if (IsSqaureRosette(square))
+                if (square != CoordToSquare[Coordinate.Off] && square != CoordToSquare[Coordinate.Home])
                 {
-                    Console.Write("*");
-                }
-                else
-                {
-                    Console.Write(" ");
+                    Console.SetCursorPosition(square.Left, square.Top);
+                    Console.BackgroundColor = piece.Player.Color;
+                    if (IsSqaureRosette(square))
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
                 }
             }
-
-            Console.ReadLine();
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         private static bool IsSqaureRosette(Square square)
@@ -199,59 +207,56 @@ namespace RoyalGameOfUr
             }
         }
 
-        //public static void Refresh()
-        //{
-        //    Console.Clear();
-        //    DrawBoard();
+        public static void SetMessage(string message)
+        {
+            Message = message;
+            DrawBoardInfo();
+        }
 
-        //    foreach (var piece in Game.Player1.Pieces)
-        //    {
-        //        piece.RefreshDraw();
-        //    }
-        //    Console.SetCursorPosition(10, 7);
-        //    Console.Write(Game.Player1.CountOffPieces());
-        //    Console.SetCursorPosition(12, 7);
-        //    Console.Write(Game.Player1.CountHomePieces());
+        public static void SetInstructions(string instructions)
+        {
+            Instructions = instructions;
+            DrawBoardInfo();
+        }
 
-        //    foreach (var piece in Game.Player2.Pieces)
-        //    {
-        //        piece.RefreshDraw();
-        //    }
-        //    Console.SetCursorPosition(31, 7);
-        //    Console.Write(Game.Player2.CountOffPieces());
-        //    Console.SetCursorPosition(33, 7);
-        //    Console.Write(Game.Player2.CountHomePieces());
+        public static List<Move> ShowMoves(Player player)
+        {
+            var sequence = player == Game.Player1 ? Player1SquareSequence : Player2SquareSequence;
+            var legalMoves = new List<Move>();
+            var id = 1;
+            foreach (var piece in player.Pieces)
+            {
+                if (piece.Square != CoordToSquare[Coordinate.Home])
+                {
+                    var squareIndex = sequence.IndexOf(piece.Square);
+                    var destination = sequence[squareIndex + DiceValue];
+                    if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
+                    {
+                        legalMoves.Add(new Move(piece, destination, id));
+                        id++;
+                    }
+                }
+            }
 
-        //    Console.WriteLine();
-        //}
+            foreach (var move in legalMoves)
+            {
+                var currentSquare = move.Piece.Square;
+                if (currentSquare == CoordToSquare[Coordinate.Off])
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
+                    Console.Write(move.Identifier);
+                }
+                else
+                {
+                    Console.BackgroundColor = player.Color;
+                    Console.SetCursorPosition(currentSquare.Left, currentSquare.Top);
+                    Console.Write(move.Identifier);
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+            }
 
-        //public static void DrawBoard()
-        //{
-        //    Console.WriteLine(BoardLayout);
-        //    var rosettes = new List<Square>
-        //    {
-        //        CoordToSquare[Coordinate.A4],
-        //        CoordToSquare[Coordinate.B4],
-        //        CoordToSquare[Coordinate.C4],
-        //        CoordToSquare[Coordinate.A6],
-        //        CoordToSquare[Coordinate.B6]
-        //    };
-        //    Console.BackgroundColor = ConsoleColor.Magenta;
-        //    foreach (var square in rosettes)
-        //    {
-        //        Console.SetCursorPosition(square.Left - 1, square.Top);
-        //        Console.Write(" * ");
-        //    }
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //    Console.SetCursorPosition(1, 6);
-        //    Console.WriteLine();
-        //    Console.WriteLine("Player 1: 7|0        Player 2: 7|0");
-        //    /*
-        //     * P1 Offs:  (10, 7)
-        //     * P1 Homes: (12, 7)
-        //     * P2 Offs:  (31, 7)
-        //     * P2 Homes: (33, 7)
-        //    */
-        //}
+            return legalMoves;
+        }
     }
 }

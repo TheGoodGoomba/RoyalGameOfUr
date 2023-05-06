@@ -8,10 +8,11 @@ namespace RoyalGameOfUr
 {
     public class Move
     {
-        public Move(Piece piece, Square destination)
+        public Move(Piece piece, Square destination, int id)
         {
             Piece = piece;
             Destination = destination;
+            Identifier = id;
         }
 
         public Piece Piece { get; set; }
