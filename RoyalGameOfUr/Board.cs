@@ -121,6 +121,12 @@ namespace RoyalGameOfUr
             if (_die2Value) roll++;
             if (_die3Value) roll++;
             if (_die4Value) roll++;
+
+            if (roll == 0)
+            {
+                roll = 1;
+            }
+
             DiceValue = roll;
             DrawBoardInfo();
             return roll;
@@ -232,8 +238,11 @@ namespace RoyalGameOfUr
                     var destination = sequence[squareIndex + DiceValue];
                     if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
                     {
-                        legalMoves.Add(new Move(piece, destination, id));
-                        id++;
+                        if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
+                        {
+                            legalMoves.Add(new Move(piece, destination, id));
+                            id++;
+                        }
                     }
                 }
             }
