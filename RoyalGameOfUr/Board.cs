@@ -122,10 +122,10 @@ namespace RoyalGameOfUr
             if (_die3Value) roll++;
             if (_die4Value) roll++;
 
-            if (roll == 0)
-            {
-                roll = 1;
-            }
+            //if (roll == 0)
+            //{
+            //    roll = 1;
+            //}
 
             DiceValue = roll;
             DrawBoardInfo();
@@ -136,7 +136,7 @@ namespace RoyalGameOfUr
         {
             Console.Clear();
 
-            Console.BackgroundColor = ConsoleColor.Black;
+            ConsoleDefaultScheme();
 
             Console.Write(BoardInfoLayout);
 
@@ -166,7 +166,7 @@ namespace RoyalGameOfUr
                 if (square != CoordToSquare[Coordinate.Off] && square != CoordToSquare[Coordinate.Home])
                 {
                     Console.SetCursorPosition(square.Left, square.Top);
-                    Console.BackgroundColor = piece.Player.Color;
+                    SetColorScheme(piece.Player);
                     if (IsSqaureRosette(square))
                     {
                         Console.Write("*");
@@ -183,7 +183,7 @@ namespace RoyalGameOfUr
                 if (square != CoordToSquare[Coordinate.Off] && square != CoordToSquare[Coordinate.Home])
                 {
                     Console.SetCursorPosition(square.Left, square.Top);
-                    Console.BackgroundColor = piece.Player.Color;
+                    SetColorScheme(piece.Player);
                     if (IsSqaureRosette(square))
                     {
                         Console.Write("*");
@@ -194,7 +194,19 @@ namespace RoyalGameOfUr
                     }
                 }
             }
+            ConsoleDefaultScheme();
+        }
+
+        private static void SetColorScheme(Player player)
+        {
+            Console.BackgroundColor = player.BgColor;
+            Console.ForegroundColor = player.TextColor;
+        }
+
+        private static void ConsoleDefaultScheme()
+        {
             Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private static bool IsSqaureRosette(Square square)
@@ -252,16 +264,16 @@ namespace RoyalGameOfUr
                 var currentSquare = move.Piece.Square;
                 if (currentSquare == CoordToSquare[Coordinate.Off])
                 {
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    ConsoleDefaultScheme();
                     Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
                     Console.Write(move.Identifier);
                 }
                 else
                 {
-                    Console.BackgroundColor = player.Color;
+                    SetColorScheme(player);
                     Console.SetCursorPosition(currentSquare.Left, currentSquare.Top);
                     Console.Write(move.Identifier);
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    ConsoleDefaultScheme();
                 }
             }
 

@@ -8,9 +8,10 @@ namespace RoyalGameOfUr
 {
     public class Player
     {
-        public Player(ConsoleColor color)
+        public Player(ConsoleColor bgColor, ConsoleColor textColor)
         {
-            Color = color;
+            BgColor = bgColor;
+            TextColor = textColor;
             Pieces = new List<Piece>
             {
                 new Piece(Board.CoordToSquare[Coordinate.Off], this),
@@ -23,7 +24,8 @@ namespace RoyalGameOfUr
             };
         }
 
-        public ConsoleColor Color { get; set; }
+        public ConsoleColor BgColor { get; set; }
+        public ConsoleColor TextColor { get; set; }
         public List<Piece> Pieces { get; set; }
 
         public int CountOffPieces()
