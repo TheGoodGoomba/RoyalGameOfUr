@@ -109,6 +109,16 @@ namespace RoyalGameOfUr
             CoordToSquare[Coordinate.B6],
             CoordToSquare[Coordinate.Home]
         };
+        static Dictionary<int, char> PieceIdLetter = new Dictionary<int, char>
+        {
+            { 1, 'A' },
+            { 2, 'B' },
+            { 3, 'C' },
+            { 4, 'D' },
+            { 5, 'E' },
+            { 6, 'F' },
+            { 7, 'G' }
+        };
 
         public static int RollDice()
         {
@@ -238,19 +248,22 @@ namespace RoyalGameOfUr
             {
                 var sequence = player == Game.Player1 ? Player1SquareSequence : Player2SquareSequence;
                 var legalMoves = new List<Move>();
-                var id = 1;
+                var idInt = 1;
                 foreach (var piece in player.Pieces)
                 {
                     if (piece.Square != CoordToSquare[Coordinate.Home])
                     {
                         var squareIndex = sequence.IndexOf(piece.Square);
-                        var destination = sequence[squareIndex + DiceValue];
-                        if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
+                        if (squareIndex + DiceValue <= 15)
                         {
-                            if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
+                            var destination = sequence[squareIndex + DiceValue];
+                            if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
                             {
-                                legalMoves.Add(new Move(piece, destination, id));
-                                id++;
+                                if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
+                                {
+                                    legalMoves.Add(new Move(piece, destination, PieceIdLetter[idInt]));
+                                    idInt++;
+                                }
                             }
                         }
                     }

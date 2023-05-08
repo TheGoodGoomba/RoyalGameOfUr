@@ -12,6 +12,17 @@ namespace RoyalGameOfUr
         public static Player Player1 = new Player(ConsoleColor.Blue, ConsoleColor.Gray);
         public static Player Player2 = new Player(ConsoleColor.DarkYellow, ConsoleColor.Black);
 
+        static Dictionary<ConsoleKey, char> KeyToChar = new Dictionary<ConsoleKey, char>
+        {
+            { ConsoleKey.A, 'A' },
+            { ConsoleKey.B, 'B' },
+            { ConsoleKey.C, 'C' },
+            { ConsoleKey.D, 'D' },
+            { ConsoleKey.E, 'E' },
+            { ConsoleKey.F, 'F' },
+            { ConsoleKey.G, 'G' },
+        };
+
         public static void Play()
         {
             while (!IsGameWon())
@@ -59,32 +70,47 @@ namespace RoyalGameOfUr
 
         static void SelectMove(List<Move> legalMoves, Player player)
         {
-            var pieceId = 0;
             while (true)
             {
-                var key = Console.ReadKey(true);
-                pieceId = KeyToInt(key.Key);
-                if (pieceId != 0)
+                char? pieceId;
+                while (true)
                 {
-                    break;
+                    var key = Console.ReadKey(true);
+                    try
+                    {
+                        pieceId = KeyToChar[key.Key];
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        pieceId = null;
+                    }
+
+                    if (pieceId != null)
+                    {
+                        break;
+                    }
+                }
+
+                var desiredMove = legalMoves.FirstOrDefault(x => x.Identifier == pieceId);
+                if (desiredMove != null)
+                {
+                    desiredMove.Piece.Move(desiredMove.Destination);
+                    return;
                 }
             }
-
-            var desiredMove = legalMoves.Find(x => x.Identifier == pieceId);
-            desiredMove.Piece.Move(desiredMove.Destination);
         }
 
-        static int KeyToInt(ConsoleKey key)
-        {
-            if (ConsoleKey.D1 <= key && key <= ConsoleKey.D7)
-            {
-                return ((int)key) - 48;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        //static int KeyToChar(ConsoleKey key)
+        //{
+        //    if (ConsoleKey.D1 <= key && key <= ConsoleKey.D7)
+        //    {
+        //        return ((int)key) - 48;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
 
         static bool IsGameWon()
         {
