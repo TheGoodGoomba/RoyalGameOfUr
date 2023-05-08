@@ -281,5 +281,14 @@ namespace RoyalGameOfUr
                 return new List<Move>();
             }
         }
+
+        public static void ResetDice()
+        {
+            DiceValue = 0;
+            _die1Value = false;
+            _die2Value = false;
+            _die3Value = false;
+            _die4Value = false;
+        }
     }
 }

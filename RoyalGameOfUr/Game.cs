@@ -53,6 +53,8 @@ namespace RoyalGameOfUr
             {
                 SelectMove(legalMoves, player);
             }
+
+            Board.ResetDice();
         }
 
         static void SelectMove(List<Move> legalMoves, Player player)
