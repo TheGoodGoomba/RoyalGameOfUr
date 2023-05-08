@@ -38,37 +38,46 @@ namespace RoyalGameOfUr
 
         static void Turn(Player player)
         {
-            var currentPlayerStr = $"Player {(player == Player1 ? "1" : "2")}";
-
-            Board.SetMessage($"{currentPlayerStr}'s Turn.");
-            Board.SetInstructions("Any key to roll.");
-            Console.ReadKey(true);
-            Board.RollDice();
-            Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
-            Board.SetInstructions("Type the number of the piece to move.");
-            var legalMoves = Board.ShowMoves(player);
-            if (legalMoves.Count == 0)
+            while (true)
             {
-                Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}. No legal moves!");
-                Board.SetInstructions("Press ENTER to end turn.");
-                while (true)
+                var repeatTurn = false;
+                var currentPlayerStr = $"Player {(player == Player1 ? "1" : "2")}";
+
+                Board.SetMessage($"{currentPlayerStr}'s Turn.");
+                Board.SetInstructions("Any key to roll.");
+                Console.ReadKey(true);
+                Board.RollDice();
+                Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
+                Board.SetInstructions("Type the number of the piece to move.");
+                var legalMoves = Board.ShowMoves(player);
+                if (legalMoves.Count == 0)
                 {
-                    var key = Console.ReadKey();
-                    if (key.Key == ConsoleKey.Enter)
+                    Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}. No legal moves!");
+                    Board.SetInstructions("Press ENTER to end turn.");
+                    while (true)
                     {
-                        break;
+                        var key = Console.ReadKey();
+                        if (key.Key == ConsoleKey.Enter)
+                        {
+                            break;
+                        }
                     }
                 }
-            }
-            else
-            {
-                SelectMove(legalMoves, player);
-            }
+                else
+                {
+                    repeatTurn = SelectMove(legalMoves, player);
+                }
 
-            Board.ResetDice();
+                Board.ResetDice();
+
+                if (!repeatTurn)
+                {
+                    break;
+                }
+            }
         }
 
-        static void SelectMove(List<Move> legalMoves, Player player)
+        static bool SelectMove(List<Move> legalMoves, Player player)
         {
             while (true)
             {
@@ -95,7 +104,14 @@ namespace RoyalGameOfUr
                 if (desiredMove != null)
                 {
                     desiredMove.Piece.Move(desiredMove.Destination);
-                    return;
+                    if (Board.IsSquareRosette(desiredMove.Destination))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }

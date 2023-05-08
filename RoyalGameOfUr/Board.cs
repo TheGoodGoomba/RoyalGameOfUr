@@ -172,7 +172,7 @@ namespace RoyalGameOfUr
                 {
                     Console.SetCursorPosition(square.Left, square.Top);
                     SetColorScheme(piece.Player);
-                    if (IsSqaureRosette(square))
+                    if (IsSquareRosette(square))
                     {
                         Console.Write("*");
                     }
@@ -189,7 +189,7 @@ namespace RoyalGameOfUr
                 {
                     Console.SetCursorPosition(square.Left, square.Top);
                     SetColorScheme(piece.Player);
-                    if (IsSqaureRosette(square))
+                    if (IsSquareRosette(square))
                     {
                         Console.Write("*");
                     }
@@ -214,7 +214,7 @@ namespace RoyalGameOfUr
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        private static bool IsSqaureRosette(Square square)
+        public static bool IsSquareRosette(Square square)
         {
             if (square == CoordToSquare[Coordinate.A4] || 
                 square == CoordToSquare[Coordinate.B4] || 
