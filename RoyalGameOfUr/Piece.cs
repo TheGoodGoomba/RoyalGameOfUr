@@ -19,12 +19,13 @@ namespace RoyalGameOfUr
 
         public void Move(Square destination)
         {
-            Square.Piece = null;
-            if (destination.Piece != null) //i.e. remove other player's piece
+            Square.Pieces.Remove(this);
+            if (destination.Pieces.Count == 1 && destination != Board.CoordToSquare[Coordinate.Home]) //i.e. remove other player's piece
             {
-                destination.Piece.Square = Board.CoordToSquare[Coordinate.Off];
+                destination.Pieces[0].Square = Board.CoordToSquare[Coordinate.Off];
+                destination.Pieces.RemoveAt(0);
             }
-            destination.Piece = this;
+            destination.Pieces.Add(this);
             Square = destination;
             Board.DrawBoardInfo();
         }

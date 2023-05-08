@@ -257,7 +257,7 @@ namespace RoyalGameOfUr
                         if (squareIndex + DiceValue <= 15)
                         {
                             var destination = sequence[squareIndex + DiceValue];
-                            if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
+                            if (destination.Pieces.Count == 0 || (destination.Pieces[0].Player != player && destination != CoordToSquare[Coordinate.C4]) || destination == CoordToSquare[Coordinate.Home])
                             {
                                 if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
                                 {

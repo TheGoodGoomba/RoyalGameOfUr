@@ -12,10 +12,11 @@ namespace RoyalGameOfUr
         {
             Left = left;
             Top = top;
+            Pieces = new List<Piece>();
         }
 
         public int Left { get; set; }
         public int Top { get; set; }
-        public Piece Piece { get; set; }
+        public List<Piece> Pieces { get; set; }
     }
 }
