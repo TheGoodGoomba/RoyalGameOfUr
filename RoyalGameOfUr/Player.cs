@@ -8,8 +8,9 @@ namespace RoyalGameOfUr
 {
     public class Player
     {
-        public Player(ConsoleColor bgColor, ConsoleColor textColor)
+        public Player(string name, ConsoleColor bgColor, ConsoleColor textColor)
         {
+            Name = name;
             BgColor = bgColor;
             TextColor = textColor;
             Pieces = new List<Piece>
@@ -25,6 +26,7 @@ namespace RoyalGameOfUr
             HasWon = false;
         }
 
+        public string Name { get; set; }
         public ConsoleColor BgColor { get; set; }
         public ConsoleColor TextColor { get; set; }
         public List<Piece> Pieces { get; set; }

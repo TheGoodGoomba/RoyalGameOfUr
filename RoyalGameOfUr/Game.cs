@@ -9,8 +9,8 @@ namespace RoyalGameOfUr
 {
     public class Game
     {
-        public static Player Player1 = new Player(ConsoleColor.Blue, ConsoleColor.Gray);
-        public static Player Player2 = new Player(ConsoleColor.DarkYellow, ConsoleColor.Black);
+        public static Player Player1;
+        public static Player Player2;
 
         static Dictionary<ConsoleKey, char> KeyToChar = new Dictionary<ConsoleKey, char>
         {
@@ -23,8 +23,11 @@ namespace RoyalGameOfUr
             { ConsoleKey.G, 'G' },
         };
 
-        public static void Play()
+        public static void Play(string p1Name, string p2Name)
         {
+            Player1 = new Player(p1Name, ConsoleColor.Blue, ConsoleColor.Gray);
+            Player2 = new Player(p2Name, ConsoleColor.DarkYellow, ConsoleColor.Black);
+
             while (!IsGameWon())
             {
                 Turn(Player1);
@@ -35,7 +38,7 @@ namespace RoyalGameOfUr
                 Turn(Player2);
             }
 
-            Board.SetMessage($"{(Player1.HasWon ? "Player 1" : "Player 2")} won the game!");
+            Board.SetMessage($"{(Player1.HasWon ? $"{Player1.Name}" : $"{Player2.Name}")} won the game!");
             Board.SetInstructions("Press ENTER to close.");
         }
 
@@ -44,18 +47,17 @@ namespace RoyalGameOfUr
             while (true)
             {
                 var repeatTurn = false;
-                var currentPlayerStr = $"Player {(player == Player1 ? "1" : "2")}";
 
-                Board.SetMessage($"{currentPlayerStr}'s Turn.");
+                Board.SetMessage($"{player.Name}'s Turn.");
                 Board.SetInstructions("Any key to roll.");
                 Console.ReadKey(true);
                 Board.RollDice();
-                Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
+                Board.SetMessage($"{player.Name} rolled a {Board.DiceValue}.");
                 Board.SetInstructions("Type the letter of the piece to move.");
                 var legalMoves = Board.ShowMoves(player);
                 if (legalMoves.Count == 0)
                 {
-                    Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}. No legal moves!");
+                    Board.SetMessage($"{player.Name} rolled a {Board.DiceValue}. No legal moves!");
                     Board.SetInstructions("Press ENTER to end turn.");
                     while (true)
                     {
