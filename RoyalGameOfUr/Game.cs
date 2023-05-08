@@ -34,6 +34,9 @@ namespace RoyalGameOfUr
                 }
                 Turn(Player2);
             }
+
+            Board.SetMessage($"{(Player1.HasWon ? "Player 1" : "Player 2")} won the game!");
+            Board.SetInstructions("Press ENTER to close.");
         }
 
         static void Turn(Player player)
@@ -48,7 +51,7 @@ namespace RoyalGameOfUr
                 Console.ReadKey(true);
                 Board.RollDice();
                 Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
-                Board.SetInstructions("Type the number of the piece to move.");
+                Board.SetInstructions("Type the letter of the piece to move.");
                 var legalMoves = Board.ShowMoves(player);
                 if (legalMoves.Count == 0)
                 {
@@ -56,7 +59,7 @@ namespace RoyalGameOfUr
                     Board.SetInstructions("Press ENTER to end turn.");
                     while (true)
                     {
-                        var key = Console.ReadKey();
+                        var key = Console.ReadKey(true);
                         if (key.Key == ConsoleKey.Enter)
                         {
                             break;
@@ -116,18 +119,6 @@ namespace RoyalGameOfUr
             }
         }
 
-        //static int KeyToChar(ConsoleKey key)
-        //{
-        //    if (ConsoleKey.D1 <= key && key <= ConsoleKey.D7)
-        //    {
-        //        return ((int)key) - 48;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
-
         static bool IsGameWon()
         {
             var player1PiecesLeft = 7;
@@ -146,8 +137,14 @@ namespace RoyalGameOfUr
                     player2PiecesLeft--;
                 }
             }
-            if (player1PiecesLeft == 0 || player2PiecesLeft == 0)
+            if (player1PiecesLeft == 0)
             {
+                Player1.HasWon = true;
+                return true;
+            }
+            else if (player2PiecesLeft == 0)
+            {
+                Player2.HasWon = true;
                 return true;
             }
             else

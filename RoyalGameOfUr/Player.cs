@@ -22,11 +22,13 @@ namespace RoyalGameOfUr
                 new Piece(Board.CoordToSquare[Coordinate.Off], this),
                 new Piece(Board.CoordToSquare[Coordinate.Off], this)
             };
+            HasWon = false;
         }
 
         public ConsoleColor BgColor { get; set; }
         public ConsoleColor TextColor { get; set; }
         public List<Piece> Pieces { get; set; }
+        public bool HasWon { get; set; }
 
         public int CountOffPieces()
         {

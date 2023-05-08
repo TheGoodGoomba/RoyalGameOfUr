@@ -12,13 +12,8 @@ namespace RoyalGameOfUr
             Console.OutputEncoding = Encoding.UTF8;
             Board.DrawBoardInfo();
             Game.Play();
-
-            //Console.WriteLine(Dice.Roll());
-
-            //Player1.Pieces[0].Move(Coordinate.A1);
-            //Console.ReadLine();
-            //Player2.Pieces[0].Move(Coordinate.A3);
-            //Console.ReadLine();
+            Console.ReadLine();
+            Console.SetCursorPosition(0, 13);
         }
     }
 }
