@@ -33,6 +33,8 @@ namespace RoyalGameOfUr
             Board.SetInstructions("Any key to roll.");
             Console.ReadKey(true);
             Board.RollDice();
+            Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
+            Board.SetInstructions("Type the number of the piece to move.");
             var legalMoves = Board.ShowMoves(player);
             if (legalMoves.Count == 0)
             {
@@ -49,8 +51,6 @@ namespace RoyalGameOfUr
             }
             else
             {
-                Board.SetMessage($"{currentPlayerStr} rolled a {Board.DiceValue}.");
-                Board.SetInstructions("Type the number of the piece to move.");
                 SelectMove(legalMoves, player);
             }
         }

@@ -122,11 +122,6 @@ namespace RoyalGameOfUr
             if (_die3Value) roll++;
             if (_die4Value) roll++;
 
-            //if (roll == 0)
-            //{
-            //    roll = 1;
-            //}
-
             DiceValue = roll;
             DrawBoardInfo();
             return roll;
@@ -239,45 +234,52 @@ namespace RoyalGameOfUr
 
         public static List<Move> ShowMoves(Player player)
         {
-            var sequence = player == Game.Player1 ? Player1SquareSequence : Player2SquareSequence;
-            var legalMoves = new List<Move>();
-            var id = 1;
-            foreach (var piece in player.Pieces)
+            if (DiceValue != 0)
             {
-                if (piece.Square != CoordToSquare[Coordinate.Home])
+                var sequence = player == Game.Player1 ? Player1SquareSequence : Player2SquareSequence;
+                var legalMoves = new List<Move>();
+                var id = 1;
+                foreach (var piece in player.Pieces)
                 {
-                    var squareIndex = sequence.IndexOf(piece.Square);
-                    var destination = sequence[squareIndex + DiceValue];
-                    if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
+                    if (piece.Square != CoordToSquare[Coordinate.Home])
                     {
-                        if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
+                        var squareIndex = sequence.IndexOf(piece.Square);
+                        var destination = sequence[squareIndex + DiceValue];
+                        if (destination.Piece == null || (destination.Piece.Player != player && destination != CoordToSquare[Coordinate.C4]))
                         {
-                            legalMoves.Add(new Move(piece, destination, id));
-                            id++;
+                            if (legalMoves.FirstOrDefault(x => x.Destination == destination) == null) //i.e. if there is no move with this destination already (prevents all off pieces being added to legalMoves with the same sqaure)
+                            {
+                                legalMoves.Add(new Move(piece, destination, id));
+                                id++;
+                            }
                         }
                     }
                 }
-            }
 
-            foreach (var move in legalMoves)
+                foreach (var move in legalMoves)
+                {
+                    var currentSquare = move.Piece.Square;
+                    if (currentSquare == CoordToSquare[Coordinate.Off])
+                    {
+                        ConsoleDefaultScheme();
+                        Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
+                        Console.Write(move.Identifier);
+                    }
+                    else
+                    {
+                        SetColorScheme(player);
+                        Console.SetCursorPosition(currentSquare.Left, currentSquare.Top);
+                        Console.Write(move.Identifier);
+                        ConsoleDefaultScheme();
+                    }
+                }
+
+                return legalMoves;
+            }
+            else
             {
-                var currentSquare = move.Piece.Square;
-                if (currentSquare == CoordToSquare[Coordinate.Off])
-                {
-                    ConsoleDefaultScheme();
-                    Console.SetCursorPosition(move.Destination.Left, move.Destination.Top);
-                    Console.Write(move.Identifier);
-                }
-                else
-                {
-                    SetColorScheme(player);
-                    Console.SetCursorPosition(currentSquare.Left, currentSquare.Top);
-                    Console.Write(move.Identifier);
-                    ConsoleDefaultScheme();
-                }
+                return new List<Move>();
             }
-
-            return legalMoves;
         }
     }
 }
